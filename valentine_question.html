@@ -1,0 +1,156 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine Frage</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Stile für den speziellen Button */
+        .special-button {
+            background-color: #753d5b; /* Pink */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .special-button:hover {
+            background-color: #92556d; /* Dunkleres Pink beim Hover */
+        }
+        /* Stile für den Bildübergang */
+        .image-transition {
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            position: relative; /* Damit das Textfeld relativ zu diesem Element positioniert wird */
+            width: 100%;
+            height: auto;
+        }
+        .image-transition.active {
+            opacity: 1;
+        }
+        /* Stile für das Textfeld */
+        .image-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            text-align: center;
+            padding: 10px;
+            white-space: pre-line; /* Zeilenumbrüche zulassen */
+        }
+        /* Stile für die Frage und den Button */
+        .valentine-question {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateY(-50%) translateX(-50%);
+            text-align: center; /* Zentriert den Text im Container */
+            width: 100%; /* Setzt die Breite auf 100% */
+        }
+        /* Stil für die Jumbotron-Komponente mit Hintergrundbild */
+        .jumbotron {
+            background-image: url('https://www.sfy.org.uk/wp-content/uploads/2021/03/Flower-Boarder-Banner-3x1-WEB-1-scaled.jpg'); /* Hintergrundbild-URL hier einfügen */
+            background-size: cover; /* Das Bild über die gesamte Jumbotron-Komponente strecken */
+            color: rgb(0, 0, 0); /* Textfarbe auf weiß setzen, damit der Text lesbar bleibt */
+        }
+        body {
+            background-color: #d45dae; /* Hintergrundfarbe hier einfügen */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Bild mit Überschrift -->
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                <h1 class="display-4">Willkommen Josi,</h1>
+                <p class="lead">Herzlichen Glückwunsch, du hast den Jackpot geknackt!</p>
+            </div>
+        </div>
+        
+        <!-- Bilder und Infotexte -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="image-container">
+                    <div class="image-item">
+                        <img src="bild1.png" class="img-fluid image-transition active">
+                        <div class="image-caption">Oder sollte ich eher sagen, Ich hab den Jackpot geknackt ??? <br>  Sei es dein schönes Lächeln, deine leutenden Augen, dein gewitzter Humor (JA DU BIST LUSTIG!), dein uniquer Kleidungsstil (Gorgous-core) oder einfach nur das Gefühl welches du in mir auslöst wenn du in meiner Nähe bist,<br> ich bin ein echter Glückspilz.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="image-container">
+                    <div class="image-item">
+                        <img src="Bild3.png" class="img-fluid image-transition">
+                        <div class="image-caption">Drum frag ich dich (*kneeling*) ... </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="image-container"> 
+                    <div class="image-item">
+                        <img src="bild2.png" class="img-fluid image-transition">
+                        <div class="valentine-question">
+                            <h2>Will you be my valentine ?</h2>
+                            <button class="btn btn-lg special-button" onclick="window.location.href='///Users/guenyanik/Desktop/GoLang/Valen/templates//valentine_confirm.html'">Yes, I want to be your Valentine</button>
+                        </div>
+                        <div class="image-caption">Für nein einfach auf "Yes, I want to be your valentine" drücken!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript für den Bildübergang basierend auf Scroll-Level
+        document.addEventListener('DOMContentLoaded', function() {
+            const images = document.querySelectorAll('.image-transition');
+
+            // Funktion zur Bestimmung des sichtbaren Bereichs des Bildschirms
+            function getVisiblePercentage(el) {
+                const rect = el.getBoundingClientRect();
+                const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+                const height = rect.bottom - rect.top;
+                const visibleHeight = Math.min(windowHeight, rect.bottom) - Math.max(0, rect.top);
+                return (visibleHeight / height) * 100;
+            }
+
+            // Funktion zum Aktualisieren des aktiven Bildes basierend auf dem sichtbaren Bereich
+            function updateActiveImage() {
+                let maxVisiblePercentage = 0;
+                let activeImageIndex = 0;
+
+                // Überprüfe jedes Bild und bestimme das Bild mit dem größten sichtbaren Anteil
+                images.forEach((image, i) => {
+                    const visiblePercentage = getVisiblePercentage(image);
+                    if (visiblePercentage > maxVisiblePercentage) {
+                        maxVisiblePercentage = visiblePercentage;
+                        activeImageIndex = i;
+                    }
+                });
+
+                // Entferne die Klasse 'active' von allen Bildern
+                images.forEach(img => img.classList.remove('active'));
+
+                // Füge die Klasse 'active' nur dem Bild mit dem größten sichtbaren Anteil hinzu
+                images[activeImageIndex].classList.add('active');
+            }
+
+            // Aktualisiere das aktive Bild basierend auf dem Scroll-Ereignis
+            window.addEventListener('scroll', updateActiveImage);
+
+            // Rufe die Funktion einmalig auf, um das anfängliche aktive Bild festzulegen
+            updateActiveImage();
+        });
+    </script>
+</body>
+</html>
